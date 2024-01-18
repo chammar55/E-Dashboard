@@ -15,7 +15,14 @@ function UpdateProduct() {
 
   const getProductDetails = async () => {
     console.log(params);
-    let result = await fetch(`http://localhost:5000/product/${params.id}`);
+    let result = await fetch(`http://localhost:5000/product/${params.id}`, {
+      //we are sending token to productlist api
+      //we are authenicating users by their tokens
+      headers: {
+        //bearer is to make auth more strong.we are checking it in verifyToken middleware in index.js file so that why we have to type it here with token itself
+        authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+    });
     result = await result.json();
     setName(result.name);
     setPrice(result.price);
@@ -27,9 +34,13 @@ function UpdateProduct() {
     console.log(name, price, category, company);
     let result = await fetch(`http://localhost:5000/product/${params.id}`, {
       method: "Put",
-      body: JSON.stringify({ name, price, category, company }),
+      body: JSON.stringify({ name, price, category, company }), //send updated values
+      //we are sending token to productlist api
+      //we are authenicating users by their tokens
       headers: {
         "Content-Type": "application/json",
+        //bearer is to make auth more strong.we are checking it in verifyToken middleware in index.js file so that why we have to type it here with token itself
+        authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`,
       },
     });
     result = await result.json();

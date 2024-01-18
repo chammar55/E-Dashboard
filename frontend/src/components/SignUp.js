@@ -31,7 +31,10 @@ function SignUp() {
     result = await result.json();
     console.log(result);
     // store user in local storage so that browser can keep the user login,User dont have to login everytime
-    localStorage.setItem("user", JSON.stringify(result));
+    localStorage.setItem("user", JSON.stringify(result.result));
+    localStorage.setItem("token", JSON.stringify(result.auth));
+    // For index-v1
+    // localStorage.setItem("user", JSON.stringify(result));
     // if we signup send us back to home page
     if (result) {
       navigate("/");

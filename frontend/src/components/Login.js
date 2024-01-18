@@ -25,12 +25,21 @@ function Login() {
     });
     result = await result.json();
     console.log(result);
-    if (result.name) {
-      localStorage.setItem("user", JSON.stringify(result));
+    // now we are login using token
+    if (result.auth) {
+      localStorage.setItem("user", JSON.stringify(result.user));
+      localStorage.setItem("token", JSON.stringify(result.auth));
       navigate("/");
     } else {
       alert("Please enter correct details");
     }
+    // For index-v1 because in this we just login using email and name
+    // if (result.name) {
+    //   localStorage.setItem("user", JSON.stringify(result));
+    //   navigate("/");
+    // } else {
+    //   alert("Please enter correct details");
+    // }
   };
 
   return (

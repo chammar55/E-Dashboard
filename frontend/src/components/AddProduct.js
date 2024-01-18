@@ -22,8 +22,12 @@ function AddProduct() {
     let result = await fetch("http://localhost:5000/add-product", {
       method: "post",
       body: JSON.stringify({ name, price, category, company, userId }),
+      //we are sending token to productlist api
+      //we are authenicating users by their tokens
       headers: {
         "Content-Type": "application/json",
+        //bearer is to make auth more strong.we are checking it in verifyToken middleware in index.js file so that why we have to type it here with token itself
+        authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`,
       },
     });
     result = await result.json();
